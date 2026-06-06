@@ -53,7 +53,7 @@ void mergeSort(int *arr, int s, int e){
 
     // base case 
     if(s>=e){
-        return ;
+        return ; 
     }
 
     int mid = s + (e-s)/2;
