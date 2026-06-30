@@ -108,6 +108,47 @@ void deleteNode(Node *&tail, int element)
     }
 }
 
+Node* floydDetectLoop(Node* head){
+    
+    if(head == NULL)
+        return NULL;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while(slow != NULL && fast != NULL){
+
+        fast = fast->next;
+        if(fast != NULL){
+            fast = fast->next;
+        }
+
+        slow = slow->next;
+
+        if(slow == fast){
+            cout<<"present at :"<<slow->data;
+            return slow;
+        }
+    }
+    return NULL;
+}
+
+Node* getStartingNode(Node* head){
+
+    if(head == NULL)
+        return NULL;
+
+    Node* intersection = floydDetectLoop(head);
+    Node* slow = head;
+
+    while(slow != intersection){
+        slow = slow->next;
+        intersection = intersection->next;
+    }
+
+    return slow;
+}
+
 int main()
 {
     Node *tail = NULL;
@@ -128,8 +169,8 @@ int main()
     // insertNode(tail, 5, 6);
     // print(tail);
 
-    deleteNode(tail, 3);
-    print(tail);
+    // deleteNode(tail, 3);
+    // print(tail);
 
     return 0;
 }

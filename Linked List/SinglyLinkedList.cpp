@@ -106,6 +106,62 @@ void deleteNode(int position, Node* &head){
     }
 }
 
+Node* floydDetectLoop(Node* head){
+    
+    if(head == NULL)
+        return NULL;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while(slow != NULL && fast != NULL){
+
+        fast = fast->next;
+        if(fast != NULL){
+            fast = fast->next;
+        }
+
+        slow = slow->next;
+
+        if(slow == fast){
+            cout<<"present at :"<<slow->data<<endl;
+            return slow;
+        }
+    }
+    return NULL;
+}
+
+Node* getStartingNode(Node* head){
+
+    if(head == NULL)
+        return NULL;
+
+    Node* intersection = floydDetectLoop(head);
+    Node* slow = head;
+
+    while(slow != intersection){
+        slow = slow->next;
+        intersection = intersection->next;
+    }
+
+    return slow;
+}
+
+void removeLoop(Node* head){
+
+    if(head == NULL)
+        return ;
+
+    Node* startOfLoop = getStartingNode(head);
+    Node* temp = startOfLoop;
+    while(temp->next != startOfLoop){
+        temp = temp->next;
+    }
+    temp->next = NULL;
+
+    
+}
+
 int main(){
 
     Node* node1 = new Node(10);
@@ -115,18 +171,37 @@ int main(){
 
     Node* head = node1;
     Node* tail = node1;
-    print(head);
+    // print(head);
     insertAtTail(tail, 12);
-    print(head);
+    // print(head);
     insertAtTail(tail, 15);
-    print(head);
-    insertAtPosition(tail, head, 4, 13);
-    print(head);
+    // print(head);
+    insertAtPosition(tail, head, 4, 22);
+    // print(head);
 
-    deleteNode(1, head);
-    print(head);
+    // deleteNode(1, head);
+    // print(head);
 
-    deleteNode(2, head);
+    // deleteNode(2, head);
+
+    // print(head);
+    tail->next = head->next;
+
+    cout<<"head: "<<head->data<<endl;
+    cout<<"tail: "<<tail->data<<endl;
+
+    if(floydDetectLoop != NULL){
+        cout<<"cycle is present!"<<endl;
+    }
+    else{
+        cout<<"no cycle!"<<endl;
+    }
+
+    Node* loop = getStartingNode(head);
+
+    cout<<"loop start at: "<<loop->data;
+
+    removeLoop(head);
     print(head);
 
     return 0;
